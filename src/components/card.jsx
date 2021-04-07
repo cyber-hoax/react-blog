@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
-import img from '../assets/img.jpg'
 import Avatar from '@material-ui/core/Avatar'
 
 
@@ -18,7 +17,7 @@ const Cards = ({type , time , title, content , name, image}) =>{
             component='img'
             alt='image'
             height='300'
-            image={image}
+            image= {image}
             title='this is an image'
           />
           <Grid container>

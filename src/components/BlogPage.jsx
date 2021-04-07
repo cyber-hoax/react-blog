@@ -1,27 +1,26 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import {db} from '../firebase'
+import Typography  from '@material-ui/core/Typography'
 
-const BlogPage = () => {
+const BlogPage = ({name }) => {
 
-    db.collection('Blog')
-    .get()
-    .then(snapshot =>{
-        const blogs = []
-        snapshot.forEach(doc =>{
-            const data = doc.data()
-            blogs.push(data)
-            console.log(blogs)
-        })
-    })
-    .catch(error => 
-        console.log(error)
+
+    useEffect(() => {
         
-    )
-
+        return (name) => {
+            console.log(name);
+            
+        }
+    }, [])
+    
+    
+    
+    
 
     return (
         <div>
-          
+         <Typography>{name}
+         </Typography>
         </div>
     )
 }
