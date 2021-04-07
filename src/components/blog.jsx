@@ -4,7 +4,7 @@ import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import Cards from './card';
 import {db} from '../firebase'
-import {Container} from '@material-ui/core'
+import {Card, Container} from '@material-ui/core'
 import BlogPage from './BlogPage'
 import FirbaseLooper from '../tools'
 
@@ -64,7 +64,7 @@ const Blog = () => {
                 image={item.image}
                 type={item.type}
                 time={item.time}
-                title={item.id}
+                title={item.name}
                 content={item.content}
                 name={item.name}
               />
@@ -73,9 +73,8 @@ const Blog = () => {
               <button onClick={submitHandler} value={item.id}>
                 click me
               </button>
-              <Link to='/blog'>
+              <Link to={{ pathname: '/blog', state: { cardId: item.id } }}>
                 <button name={item.name} value={item.id}>
-                  
                   click here
                 </button>
               </Link>

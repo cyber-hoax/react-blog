@@ -1,28 +1,35 @@
-import React, {useEffect} from 'react'
+import React, {useState} from 'react'
 import {db} from '../firebase'
 import Typography  from '@material-ui/core/Typography'
 
-const BlogPage = ({name }) => {
+const BlogPage = ({location : {state} }) => {
+    const  cardId = state && state.cardId
+    const [blog , setBlock] = useState("")
 
 
-    useEffect(() => {
-        
-        return (name) => {
-            console.log(name);
-            
-        }
-    }, [])
+    db.collection('Blog')
+    .doc(cardId)
+    .onSnapshot(snapshot =>{
+        setBlock(snapshot.data())
+    })
+    
+   
     
     
     
     
 
     return (
-        <div>
-         <Typography>{name}
-         </Typography>
-        </div>
-    )
+      <div>
+        <Typography>
+          {cardId === '8JSUuaCTxLUbWA8ZjgwC'}
+          <img src={blog.image} alt=""/> 
+          <h1>{blog.name}</h1>
+          
+        </Typography>
+        
+      </div>
+    );
 }
 
 export default BlogPage
