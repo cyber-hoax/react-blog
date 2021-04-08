@@ -1,91 +1,76 @@
-
-import React, { useState , useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Grid from '@material-ui/core/Grid';
 import { Link } from 'react-router-dom';
 import Cards from './card';
-import {db} from '../firebase'
-import {Card, Container} from '@material-ui/core'
-import BlogPage from './BlogPage'
-import FirbaseLooper from '../tools'
+import { db } from '../firebase';
+import { Container, Typography , Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 
-
+import FirbaseLooper from '../tools';
+const useStyle = makeStyles((theme) => ({}))
 
 const Blog = () => {
+  const [blog, setBlog] = useState([]);
+  const [loading, setLoading] = useState(false);
 
+  const blogs = db.collection('Blog');
 
-  const [blog , setBlog] = useState([])
-  const [ loading, setLoading] = useState(false)
-  const [block , setBlock] = useState(true)
-  const [uid , setUid] = useState("")
-
-  const blogs = db.collection('Blog')
-
-
-  function GetBlog(){
-    setLoading(true)
-    blogs.onSnapshot((snapshot) =>{
-      const data = FirbaseLooper(snapshot)
+  function GetBlog() {
+    setLoading(true);
+    blogs.onSnapshot((snapshot) => {
+      const data = FirbaseLooper(snapshot);
       setBlog(data);
-      console.log(data)
-      setLoading(false)
-    })
+      console.log(data);
+      setLoading(false);
+    });
   }
-  
 
-  useEffect(() =>{
-    GetBlog()
-  },[])
+  useEffect(() => {
+    GetBlog();
+  }, []);
 
- 
-  
-  const submitHandler = (i) =>{
-    console.log(block)
-    
-    blogs.doc(i.target.value)
-    .onSnapshot((snapshot) =>{
-      console.log(snapshot.data())
-       setUid(i.target.value)
-    })
-   
-    console.log(uid)
-
-    
+    const classes = useStyle();
 
 
-   
-  }
-  
-    return (
-      <Container maxWidth='lg'>
-        <Grid container spacing={2} justify='space-evenly'>
-          {blog.map((item, i) => (
-            <Grid key={i} item md={4}>
-              <Cards
-                image={item.image}
-                type={item.type}
-                time={item.time}
-                title={item.name}
-                content={item.content}
-                name={item.name}
-              />
-              <br />
+  return (
+    <Container style={{ marginTop: '10vh', marginBottom: '10vh' }}>
+      <Typography
+        variant='h2'
+        style={{ textAlign: 'center', paddingBottom: '150px' }}
+      >
+        My Blogs
+      </Typography>
+      <Grid container spacing={2} justify='space-evenly'>
+        {blog.map((item, i) => (
+          <Grid key={i} item md={4}>
+            <Cards
+              image={item.image}
+              type={item.type}
+              time={item.time}
+              title={item.title}
+              content={item.content}
+              name={item.name}
+            />
+            <Link
+              to={{ pathname: `/blog/${item.name}` }}
+              style={{ textDecoration: 'none' }}
+            >
+              <Button
+                style={{ position: 'relative', bottom: '50px', left: '255px' }}
+                color='color= "secondary"'
+                variant='outlined'
+                value={item.id}
+              >
+                click here
+              </Button>
+            </Link>
 
-              <button onClick={submitHandler} value={item.id}>
-                click me
-              </button>
-              <Link to={{ pathname: '/blog', state: { cardId: item.id } }}>
-                <button name={item.name} value={item.id}>
-                  click here
-                </button>
-              </Link>
-            </Grid>
-          ))}
-        </Grid>
-      </Container>
-    );
-}
+            <br />
+          </Grid>
+        ))}
+      </Grid>
+    </Container>
+  );
+};
 
-
-
-
-export default Blog
+export default Blog;

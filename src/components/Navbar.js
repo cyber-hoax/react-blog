@@ -44,11 +44,11 @@ const Navbar = () => {
           <AppBar position='fixed'>
             <Container>
               <Toolbar>
-                <Typography variant='h6'>Scroll to Elevate App Bar</Typography>
+                <Typography variant='h5'>Scroll to Elevate App Bar</Typography>
                 <Tabs
                   value={value}
                   onChange={handleChange}
-                  textColor='secondary'
+                  textColor='seconadry'
                 >
                   <Tab label='Blogs' />
                 </Tabs>
